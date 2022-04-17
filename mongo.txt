@@ -192,7 +192,7 @@ db.COLLECTION_NAME.updateMany({}, {});
 
 
 Для смены названия какого ни будь поля, используем команду $rename
-db.users.updateMany(
+db.COLLECTION_NAME.updateMany(
     {},
     {
         $rename: {
@@ -203,6 +203,26 @@ db.users.updateMany(
 
 
 Удаление определенной записи, первым параметром определяем объект с критериями
-db.users.deleteOne({
+db.COLLECTION_NAME.deleteOne({
     age: 100
 })
+
+
+
+Связи - один ко многим
+db.users.update(
+    {username: "Some name4"},
+    {
+        $set: {
+            posts: [
+                {title: "JS", text: "JS top"},
+                {title: "Mongo", text: "Mongo top"}
+            ]
+        }
+    }
+);
+
+db.users.findOne(
+    {username: "Some name4"},
+    {posts: 1}
+);
